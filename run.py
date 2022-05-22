@@ -1,10 +1,7 @@
-from flask import Flask, render_template
-
-app = Flask(__name__)
-
-@app.route('/')
-def datastuff():
-    return render_template("editor.html")
+from application import app
 
 if __name__ == "__main__":
+    print("mokey")
     app.run(debug=True)
+
+    #Basic Editor with placeable blocks and a temple, also arranged project to look nice

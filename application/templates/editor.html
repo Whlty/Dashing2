@@ -1,0 +1,32 @@
+<div class="card">
+<link rel="stylesheet" href="{{url_for('static',filename='styles.scss')}}">
+
+
+    <header>
+       <h1>GD Editor</h1>
+       <div>
+ <button class="button-as-link" onclick="clearCanvas()">Clear</button>
+          <button class="primary-button" onclick="exportImage()">Load File</button>
+       </div>
+    </header>
+    <div class="card_body">
+       <aside>
+          <label>Objects</label>
+          <div class="tileset-container">
+            <img src="../static/images/gdTextures.png" id="tileset-source">
+             <div class="tileset-container_selection"></div>
+          </div>
+       </aside>
+       <div class="card_right-column">
+          <canvas width="256" height="256">
+          </canvas>
+          <p class="instructions">
+             Shift+Click to Delete.
+          </p>
+
+       </div>
+    </div>
+ </div>
+<body
+><script type="text/javascript" src="{{url_for('static',filename='editor.js')}}"></script>
+</body>
