@@ -36,14 +36,15 @@ function addTile(mouseEvent) {
       delete layers[currentLayer][key];
    } else {
       layers[currentLayer][key] = [selection[0], selection[1]];
+     
    }
    draw();
+
 }
 
 //Bind mouse events for painting (or removing) tiles on click/drag
 canvas.addEventListener("mousedown", () => {
    isMouseDown = true;
-   console.log("hand");
 });
 canvas.addEventListener("mouseup", () => {
    isMouseDown = false;
@@ -68,10 +69,56 @@ function getCoords(e) {
 
 //converts data to image:data string and pipes into new browser tab
 function exportImage() {
-   var data = canvas.to;
-   window.alert(data);
+   draw();
 
-   window.console.log(data);
+   // data = data.replace(/\D/g, '');
+   gdlevel = "";
+   currentNum = "";
+   x = false;
+
+
+   console.log(data + " - The data");
+   for (var i = 0; i < data.length + 1; i++) {
+      console.log(data[i] + " - i");
+      if (data[i] == "-" || data[i] == "," || data[i] == null) {
+         x = !x;
+         if (x == true){
+            console.log(currentNum + " - x coord");
+            gdlevel = gdlevel.concat("1,1,2," + currentNum + ",");
+         }
+         else {
+            console.log(currentNum + " - y coord");
+            gdlevel = gdlevel.concat("3," + currentNum + ";");  
+         }
+         currentNum = "";  
+      }
+      else {
+         currentNum = currentNum.concat(data[i]);
+      }
+   }
+
+   // gdlevel = gdlevel.substring(0, gdlevel.length - 1);
+   vaildLevel = false;
+   while (vaildLevel == false){
+      lvlName = window.prompt("Level Name (20 Characters limit):")
+      lvlName = lvlName.replace(/[^a-zA-Z0-9 ]/gi,'');
+
+      if (lvlName.length > 20) {
+         window.alert("Too Long")
+   
+      }
+      else if (lvlName.length <= 0){
+         window.alert("Too Short")
+      }
+      else {
+         vaildLevel = true;
+      }
+   }
+
+   download(lvlName,gdlevel);
+   console.log(gdlevel + " - The level");
+
+   
 }
 
 //Reset state to empty
@@ -100,10 +147,20 @@ function draw() {
    
    layers.forEach((layer) => {
       Object.keys(layer).forEach((key) => {
+         
+         
+         
          //Determine x/y position of this placement from key ("3-4" -> x=3, y=4)
          var positionX = Number(key.split("-")[0]);
          var positionY = Number(key.split("-")[1]);
          var [tilesheetX, tilesheetY] = layer[key];
+
+         data = Object.keys(layer).toString();
+        
+
+
+
+
 
          ctx.drawImage(
             tilesetImage,
@@ -120,7 +177,6 @@ function draw() {
    });
 }
 
-//Default image for booting up -> Just looks nicer than loading empty canvas
 
 //Initialize app when tileset source is done loading
 tilesetImage.onload = function() {
@@ -128,5 +184,20 @@ tilesetImage.onload = function() {
    draw();
    setLayer(0);
 }
+
+
+
+function download(filename, text) {
+   var element = document.createElement('a');
+   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+   element.setAttribute('download', filename);
+ 
+   element.style.display = 'none';
+   document.body.appendChild(element);
+ 
+   element.click();
+ 
+   document.body.removeChild(element);
+ }
 
 
