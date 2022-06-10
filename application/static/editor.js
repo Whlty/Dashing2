@@ -2,6 +2,7 @@ var canvas = document.querySelector("canvas");
 var tilesetContainer = document.querySelector(".tileset-container");
 var tilesetSelection = document.querySelector(".tileset-container_selection");
 var tilesetImage = document.querySelector("#tileset-source");
+let importedLevel = document.querySelector('input');
 
 
 var selection = [0, 0]; //Which tile we will paint from the menu
@@ -67,7 +68,12 @@ function getCoords(e) {
    return [Math.floor(mouseX / 32), Math.floor(mouseY / 32)];
 }
 
-//converts data to image:data string and pipes into new browser tab
+function ImportLevel(){
+   files = importedLevel.files;
+   window.alert(files[0]);
+   
+}
+
 function exportImage() {
    draw();
 
@@ -157,7 +163,6 @@ function draw() {
 
          data = Object.keys(layer).toString();
         
-
 
 
 
