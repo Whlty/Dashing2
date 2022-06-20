@@ -71,6 +71,7 @@ function getCoords(e) {
 function ImportLevel(){
    files = importedLevel.files;
    window.alert(files[0]);
+   console.log(files[0]);
    
 }
 
@@ -101,6 +102,7 @@ function exportImage() {
       else {
          currentNum = currentNum.concat(data[i]);
       }
+      
    }
 
    // gdlevel = gdlevel.substring(0, gdlevel.length - 1);
@@ -114,15 +116,19 @@ function exportImage() {
    
       }
       else if (lvlName.length <= 0){
-         window.alert("Too Short")
+         lvlName = "Unnamed";
+         vaildLevel = true;
       }
       else {
          vaildLevel = true;
       }
    }
 
+   
+
    download(lvlName,gdlevel);
    console.log(gdlevel + " - The level");
+   
 
    
 }
@@ -162,6 +168,8 @@ function draw() {
          var [tilesheetX, tilesheetY] = layer[key];
 
          data = Object.keys(layer).toString();
+         
+         
         
 
 
