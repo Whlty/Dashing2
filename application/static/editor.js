@@ -3,6 +3,8 @@ var tilesetContainer = document.querySelector(".tileset-container");
 var tilesetSelection = document.querySelector(".tileset-container_selection");
 var tilesetImage = document.querySelector("#tileset-source");
 let importedLevel = document.querySelector('input');
+var newData = "";
+
 
 
 var selection = [0, 0]; //Which tile we will paint from the menu
@@ -68,12 +70,14 @@ function getCoords(e) {
    return [Math.floor(mouseX / 32), Math.floor(mouseY / 32)];
 }
 
-function ImportLevel(){
-   files = importedLevel.files;
-   window.alert(files[0]);
-   console.log(files[0]);
-   
-}
+// function ImportLevel(){
+//    files = importedLevel.files;
+//    fs.readfile('/static/files/djasklfdjasklfdjas.txt', 'utf8', function(err,data) {
+//       if(err) throw err;
+//       obj = JSON.parse(data);
+//       console.log(obj);
+//    });
+// }
 
 function exportImage() {
    draw();
@@ -91,7 +95,7 @@ function exportImage() {
          x = !x;
          if (x == true){
             console.log(currentNum + " - x coord");
-            gdlevel = gdlevel.concat("1,1,2," + currentNum + ",");
+            gdlevel = gdlevel.concat("1," + blockType + ",2," + currentNum + ",");
          }
          else {
             console.log(currentNum + " - y coord");
@@ -104,6 +108,11 @@ function exportImage() {
       }
       
    }
+
+
+   
+
+   
 
    // gdlevel = gdlevel.substring(0, gdlevel.length - 1);
    vaildLevel = false;
@@ -167,13 +176,16 @@ function draw() {
          var positionY = Number(key.split("-")[1]);
          var [tilesheetX, tilesheetY] = layer[key];
 
+         
+
          data = Object.keys(layer).toString();
-         
-         
-        
+         blockType = (tilesheetX + tilesheetY * 6) + 1;
+
+         var id = "ctl03_Tabs1";
+         var curBlock = data.substr(id.length - 5);
 
 
-
+         console.log(data);
 
          ctx.drawImage(
             tilesetImage,
