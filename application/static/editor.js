@@ -12,15 +12,10 @@ var selection = [0, 0]; //Which tile we will paint from the menu
 var isMouseDown = false;
 var currentLayer = 0;
 var layers = [
-   //Bottom
+   // Grid, keep empty
    {
-      //Structure is "x-y": ["tileset_x", "tileset_y"]
-      //EXAMPLE: "1-1": [3, 4],
-   },
-   //Middle
-   {},
-   //Top
-   {}
+
+   }
 ];
 
 //Select tile from the Tiles grid
@@ -70,15 +65,7 @@ function getCoords(e) {
    return [Math.floor(mouseX / 32), Math.floor(mouseY / 32)];
 }
 
-// function ImportLevel(){
-//    files = importedLevel.files;
-//    fs.readfile('/static/files/djasklfdjasklfdjas.txt', 'utf8', function(err,data) {
-//       if(err) throw err;
-//       obj = JSON.parse(data);
-//       console.log(obj);
-//    });
-// }
-
+// download levels for importing
 function exportImage() {
    draw();
 
@@ -135,9 +122,9 @@ function exportImage() {
 
    
 
-   download(lvlName,gdlevel);
+   download(lvlName,gdlevel); 
    console.log(gdlevel + " - The level");
-   
+
 
    
 }
@@ -203,15 +190,15 @@ function draw() {
 }
 
 
-//Initialize app when tileset source is done loading
+//Initialize app
 tilesetImage.onload = function() {
-   layers = defaultState;
+   layers = defaultState; // default state empty
    draw();
    setLayer(0);
 }
 
 
-
+// download as text file
 function download(filename, text) {
    var element = document.createElement('a');
    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -223,6 +210,12 @@ function download(filename, text) {
    element.click();
  
    document.body.removeChild(element);
+ }
+
+ // make converter thingy
+ function encode()
+ {
+    
  }
 
 
