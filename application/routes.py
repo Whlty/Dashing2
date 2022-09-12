@@ -1,8 +1,21 @@
 from application import app
 from application import models
-from flask import Flask, render_template, request, redirect
+import sqlite3
+from flask import Flask, render_template, g, request, redirect, flash, session
+import json
+import sqlite3
 import os
+import re
 
+
+DATABASE = 'levels.db'
+
+
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+    return db
 
 @app.route('/')
 def datastuff():
@@ -11,15 +24,32 @@ def datastuff():
 
 @app.route('/upload',methods=["GET","Post"])
 def upload():
-     for file in request.files.getlist("file"):
-        filename = file.filename
-        destination = os.path.join("static/files", filename)
-        file.save(destination)
+    filename = request.form.get("file")
+    print(filename)
 
-        user = User()
-        
-        user.level = destination
-        db.session.add()
-        return redirect("/")
+    cursor = get_db().cursor()
+    cursor.execute("INSERT into user (levelName) VALUES (?)")
+    get_db().commit()
+    return redirect("/")
+
+
+@app.route('/data')
+def getLevels():
+    #stats display for one user
+    cursor = get_db().cursor()
+    sql = "SELECT * FROM user"
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    return render_template("levels.html", results=results)
+
+@app.route('search',methods=["GET","Post"])
+def search():
+
+
+@app.route('/download')
+def downloadOnline()
+    id = request.form.get("levelname")
+    cursor = get_db().cursor()
+    sql = "SELECT level FROM user WHERE id="
 
         

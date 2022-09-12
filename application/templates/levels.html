@@ -1,4 +1,27 @@
 <div class="card">
     <link rel="stylesheet" href="{{url_for('static',filename='styles.scss')}}">
-    
+    <form action="/contents" method="post">
+        <input type="text" name="lvlname" required>
+        <input type="submit" value="search">
+        </form>
+
+    <table>
+        <tr>
+            <th>Gamer</th>
+            <th>Level</th>
+            <th>Download</th>>
+        </tr>
+        {% for item in results %}
+        <tr>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[2] }}</td>
+            <td>
+                <form action="/download"method="post">
+                <input type="submit" value="Download">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
     </body>
