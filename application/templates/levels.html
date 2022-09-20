@@ -1,5 +1,12 @@
 <div class="card">
     <link rel="stylesheet" href="{{url_for('static',filename='styles.scss')}}">
+
+    <div class="topnav">
+        <a href="/">Editor</a>
+       <a href="data">Levels</a>
+    
+    </div>
+
     <form action="/contents" method="post">
         <input type="text" name="lvlname" required>
         <input type="submit" value="search">
@@ -15,11 +22,6 @@
         <tr>
             <td>{{ item[1] }}</td>
             <td>{{ item[2] }}</td>
-            <td>
-                <form action="/download"method="post">
-                <input type="submit" value="Download">
-                </form>
-            </td>
         </tr>
         {% endfor %}
     </table>

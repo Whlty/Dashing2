@@ -1,5 +1,4 @@
 from application import app
-from application import models
 import sqlite3
 from flask import Flask, render_template, g, request, redirect, flash, session
 import json
@@ -22,15 +21,18 @@ def datastuff():
     return render_template("editor.html")
 
 
-@app.route('/upload',methods=["GET","Post"])
-def upload():
-    filename = request.form.get("file")
-    print(filename)
+@app.route('/upload',methods=['GET', 'POST'])
+def uploadlvl():
+    if request.method == 'POST':
+        file = request.files['file']
+        get_db()
+        cursor = get_db().cursor()
+        cursor.execute(file)
+        get_db().commit()
+        
 
-    cursor = get_db().cursor()
-    cursor.execute("INSERT into user (levelName) VALUES (?)")
-    get_db().commit()
-    return redirect("/")
+        return f'Uploaded: {file.filename}'
+    return render_template('editor.html')
 
 
 @app.route('/data')
@@ -42,12 +44,9 @@ def getLevels():
     results = cursor.fetchall()
     return render_template("levels.html", results=results)
 
-@app.route('search',methods=["GET","Post"])
-def search():
-
 
 @app.route('/download')
-def downloadOnline()
+def downloadOnline():
     id = request.form.get("levelname")
     cursor = get_db().cursor()
     sql = "SELECT level FROM user WHERE id="

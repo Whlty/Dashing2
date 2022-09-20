@@ -8,5 +8,4 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///levels.db'
 
 db = SQLAlchemy(app)
 
-from application import models
 from application import routes
