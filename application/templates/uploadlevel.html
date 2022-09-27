@@ -1,0 +1,18 @@
+<div class="card">
+    <link rel="stylesheet" href="{{url_for('static',filename='styles.scss')}}">
+
+    <div class="topnav">
+        <a href="/">Editor</a>
+       <a href="data">Levels</a>
+       <a href="uploadlvl">Upload Level</a>
+    
+    </div>
+
+    <h1>Username</h1>
+    <form id="upload" action="{{url_for('uploadlvl')}}" method="POST" enctype="multipart/form-data">
+        <input type="text" name="uploadername" required>
+    <h1>Level Name</h1>
+        <input type="text" name="lvlname" required>    
+            <input type="file" name="file" required>
+            <button>Upload level</button>
+    </body>

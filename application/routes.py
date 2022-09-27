@@ -20,35 +20,53 @@ def get_db():
 def datastuff():
     return render_template("editor.html")
 
-
+# upload level button
 @app.route('/upload',methods=['GET', 'POST'])
 def uploadlvl():
     if request.method == 'POST':
         file = request.files['file']
-        get_db()
+        levelData = file.read()
+
+        levelName = request.form.get('lvlname')
+        userName = request.form.get('uploadername')
+
         cursor = get_db().cursor()
-        cursor.execute(file)
+        cursor.execute("INSERT INTO user (user,levelName) VALUES (?,?)", (userName, levelName))
+        cursor.execute("INSERT INTO level (levelData,levelName) VALUES (?,?)", (levelData, levelName))
+
         get_db().commit()
-        
 
-        return f'Uploaded: {file.filename}'
-    return render_template('editor.html')
+    return render_template('levels.html')
 
-
+# get all levels
 @app.route('/data')
 def getLevels():
-    #stats display for one user
     cursor = get_db().cursor()
     sql = "SELECT * FROM user"
     cursor.execute(sql)
     results = cursor.fetchall()
     return render_template("levels.html", results=results)
 
-
-@app.route('/download')
-def downloadOnline():
-    id = request.form.get("levelname")
+# download level
+@app.route('/download/<download_id>')
+def downloadlevel(download_id):
     cursor = get_db().cursor()
-    sql = "SELECT level FROM user WHERE id="
+    sql = "SELECT levelData FROM level WHERE id = " + download_id
+    cursor.execute(sql)
+    levelDataSelected = cursor.fetchall()
+
+    print(levelDataSelected)
+
+    text_file = open("Output.txt", "w")
+    text_file.write(str(levelDataSelected))
+    text_file.close()
+
+    return redirect('/data')
+
+# uploading level page
+@app.route('/uploadlvl')
+def uploadlvl_():
+    return render_template('uploadlevel.html')
+    
 
         

@@ -5,6 +5,7 @@
 <div class="topnav">
 	<a href="/">Editor</a>
    <a href="data">Levels</a>
+   <a href="uploadlvl">Upload Level</a>
 
 </div>
 
@@ -13,10 +14,7 @@
        <div>
  <button class="button-as-link" onclick="clearCanvas()">Clear</button>
           <button class="primary-button" onclick="exportImage()">Download as file</button>
-          <form id="upload" action="{{url_for('uploadlvl')}}" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file">
-            <button>Upload level</button>
-          </form>
+         
 
        </div>
     </header>

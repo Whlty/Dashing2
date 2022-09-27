@@ -4,13 +4,9 @@
     <div class="topnav">
         <a href="/">Editor</a>
        <a href="data">Levels</a>
+       <a href="uploadlvl">Upload Level</a>
     
     </div>
-
-    <form action="/contents" method="post">
-        <input type="text" name="lvlname" required>
-        <input type="submit" value="search">
-        </form>
 
     <table>
         <tr>
@@ -22,6 +18,11 @@
         <tr>
             <td>{{ item[1] }}</td>
             <td>{{ item[2] }}</td>
+            <td>
+            <form action="{{ url_for('downloadlevel',download_id = item[0])}} ">
+                <input type="submit" value="Download">
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </table>
